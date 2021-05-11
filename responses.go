@@ -15,23 +15,23 @@ type ResponseContent struct {
 type ServerResponse struct {
 	Ms string `json:"ms"`
 	Code string `json:"code"`
-	Method string `json:"method"`
-	Content ResponseContent `json:"content"`
+	Method string `json:"method,omitempty"`
+	Content *ResponseContent `json:"content,omitempty"`
 }
 
 // Client response struct
 // This borrows a lot from a server's response
 // Fields we should expect from the client
 type ClientResponse struct {
-	SessionID string `json:"sessionID,omitempty"`
+	SessionID string `json:"sessionID"`
 	// Code is the only required field by the spec
 	// To check if it was provided, we make it a pointer to a string
 	// If the pointer is nil, no `code` sent and if not nil `code` was sent
 	Code *string `json:"code"`
-	Method string `json:"method,omitempty"`
-	Destinations []string `json:"destinations,omitempty"`
-	Key string `json:"key,omitempty"`
-	Content ResponseContent `json:"content,omitempty"`
+	Method string `json:"method"`
+	Destinations []string `json:"destinations"`
+	Key string `json:"key"`
+	Content ResponseContent `json:"content"`
 }
 
 // Utility function which constructs a ServerResponse, where Code is MESSAGE
