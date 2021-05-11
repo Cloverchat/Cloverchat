@@ -11,7 +11,7 @@ type ResponseContent struct {
 }
 
 // The server response struct
-// I dont know how to describe, im bad with comments
+// What we should send, as defined by the procotol
 type ServerResponse struct {
 	Ms string `json:"ms"`
 	Code string `json:"code"`
@@ -21,8 +21,12 @@ type ServerResponse struct {
 
 // Client response struct
 // This borrows a lot from a server's response
+// Fields we should expect from the client
 type ClientResponse struct {
 	SessionID string `json:"sessionID,omitempty"`
+	// Code is the only required field by the spec
+	// To check if it was provided, we make it a pointer to a string
+	// If the pointer is nil, no `code` sent and if not nil `code` was sent
 	Code *string `json:"code"`
 	Method string `json:"method,omitempty"`
 	Destinations []string `json:"destinations,omitempty"`
