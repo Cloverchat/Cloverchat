@@ -2,7 +2,6 @@
 package main
 
 import "time"
-import "strconv"
 
 // content field of responses
 type ResponseContent struct {
@@ -13,7 +12,7 @@ type ResponseContent struct {
 // The server response struct
 // What we should send, as defined by the procotol
 type ServerResponse struct {
-	Ms string `json:"ms"`
+	Ms int64 `json:"ms"`
 	Code string `json:"code"`
 	Method string `json:"method,omitempty"`
 	Content *ResponseContent `json:"content,omitempty"`
@@ -36,7 +35,7 @@ type ClientResponse struct {
 
 // Utility function which constructs a ServerResponse, where Code is MESSAGE
 // which is a normal message in the TermTalk protocol
-func ConstructMessage(content ResponseContent, mthd ...string) ServerResponse {
+func ConstructMessage(content *ResponseContent, mthd ...string) ServerResponse {
 	method := ""
 	timestamp := time.Now().Unix()
 
@@ -45,7 +44,7 @@ func ConstructMessage(content ResponseContent, mthd ...string) ServerResponse {
 	}
 
 	return ServerResponse {
-		Ms: strconv.FormatInt(timestamp, 10),
+		Ms: timestamp,
 		Code: "MESSAGE",
 		Method: method,
 		Content: content,
